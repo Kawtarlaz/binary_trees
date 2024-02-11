@@ -1,49 +1,41 @@
 #include "binary_trees.h"
-size_t binary_tree_height(const binary_tree_t *tree);
+
 /**
- * binary_tree_balance - Measures the balance factor of a binary tree
- * @tree: Pointer to the root node of the tree to measure the balance factor
+ * binary_tree_balance - measures the balance factor of a binary tree
+ * @tree: pointer to the root node of the tree to measure the balance factor
  *
- * Return: Balance factor of the tree. If tree is NULL, return 0
+ * Return: the balance factor
+ *         0 if tree is NULL
  */
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	int height_left = 0;
-	int height_right = 0;
+	int height_l, height_r;
 
-	/* Check if tree is NULL */
-	if (tree == NULL)
+	if (!tree)
 		return (0);
 
-	/* Measure the height of the left and right subtrees */
-	height_left = (int)binary_tree_height(tree->left);
-	height_right = (int)binary_tree_height(tree->right);
+	height_l = tree->left ? (int)binary_tree_height(tree->left) : -1;
+	height_r = tree->right ? (int)binary_tree_height(tree->right) : -1;
 
-	/* Return the difference between the two heights */
-	return (height_left - height_right);
+	return (height_l - height_r);
 }
 
 /**
- * binary_tree_height - Measures the height of a binary tree
- * @tree: Pointer to the root node of the tree to measure the height
+ * binary_tree_height - measures the height of a binary tree
+ * @tree: tree to measure the height of
  *
- * Return: Height of the tree. If tree is NULL, return 0
+ * Return: height of the tree
+ *         0 if tree is NULL
  */
 size_t binary_tree_height(const binary_tree_t *tree)
 {
-	size_t height_left = 0;
-	size_t height_right = 0;
+	size_t height_l = 0;
+	size_t height_r = 0;
 
-	/* Check if tree is NULL */
-	if (tree == NULL)
+	if (!tree)
 		return (0);
 
-	/* Recursively measure the height of the left and right subtrees */
-	if (tree->left != NULL)
-		height_left = 1 + binary_tree_height(tree->left);
-	if (tree->right != NULL)
-		height_right = 1 + binary_tree_height(tree->right);
-
-	/* Return the greater of the two heights */
-	return ((height_left > height_right) ? height_left : height_right);
+	height_l = tree->left ? 1 + binary_tree_height(tree->left) : 0;
+	height_r = tree->right ? 1 + binary_tree_height(tree->right) : 0;
+	return (height_l > height_r ? height_l : height_r);
 }
